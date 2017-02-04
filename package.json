@@ -1,17 +1,20 @@
 {
-  "name": "emoji-scraper",
+  "name": "kaomoji-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "scrape": "rimraf ./results/* && node scraper.js",
-    "dev": "nodemon api.js",
-    "start": "node api.js",
+    "dev-api": "nodemon api.js",
+    "dev-discord": "nodemon discord.js",
+    "api": "node api.js",
+    "discord": "node discord.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Jack Cuthbert <jckcthbrt@gmail.com>",
+  "license": "MIT",
   "dependencies": {
+    "discordie": "^0.11.0",
     "express": "^4.14.1",
     "jsonfile": "^2.4.0",
     "x-ray": "^2.3.1"

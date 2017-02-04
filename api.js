@@ -2,12 +2,10 @@ const express = require('express');
 const app = express();
 
 const fs = require('fs');
-const jsonfile = require('jsonfile');
-const path = require('path');
 
-// app.get('/', function(req, res){
-//   res.send('hello world');
-// });
+// Emoji lib
+const jsonfile = require('jsonfile');
+const chooseEmoji = require('./utils/chooseEmoji');
 
 app.get('/api/:category', (req, res) => {
   const fileName = `./results/${req.params.category}.json`;
@@ -26,9 +24,5 @@ app.get('/api/:category', (req, res) => {
   });
 
 });
-
-function chooseEmoji (data) {
-  return data[Math.floor(Math.random() * data.length)];
-}
 
 app.listen(process.env.PORT || 3000);
