@@ -7,7 +7,6 @@ const xray = x();
 
 const sources = require('./sources.config');
 
-// x(source, selector)(function);
 function processEmoji (category) {
   return (err, obj) => {
     if (err) { console.error(`xray error: ${err}`); return; }
