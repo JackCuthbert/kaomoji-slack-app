@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "rimraf ./results/* && node index.js",
-    "start-dev": "nodemon api.js",
+    "scrape": "rimraf ./results/* && node scraper.js",
+    "dev": "nodemon api.js",
     "start": "node api.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
