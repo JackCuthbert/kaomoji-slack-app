@@ -8,7 +8,7 @@ const jsonfile = require('jsonfile');
 const chooseEmoji = require('./utils/chooseEmoji');
 
 app.get('/api/:category', (req, res) => {
-  const fileName = `./results/${req.params.category}.json`;
+  const fileName = `./kaomoji/${req.params.category}.json`;
 
   fs.exists(fileName, (exists) => {
     if (!exists) {

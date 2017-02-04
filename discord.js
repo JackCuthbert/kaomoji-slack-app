@@ -12,11 +12,11 @@ client.connect({
   token: process.env.DISCORD_CLIENT_SECRET,
 });
 
-client.Dispatcher.on(Events.GATEWAY_READY, e => {
+client.Dispatcher.on(Events.GATEWAY_READY, (e) => {
   console.log(`Connected as: ${client.User.username}`);
 });
 
-client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
+client.Dispatcher.on(Events.MESSAGE_CREATE, (e) => {
   const message = e.message.content;
 
   if (message.includes('/kaomoji') && !message.includes('Use:')) {
@@ -29,7 +29,7 @@ client.Dispatcher.on(Events.MESSAGE_CREATE, e => {
 
     } else {
       // Read in the feeling file in the results directory
-      const fileName = `./results/${params[1]}.json`;
+      const fileName = `./kaomoji/${params[1]}.json`;
       jsonfile.readFile(fileName, (err, obj) => {
 
         // Usually means it's not found, so bot doesn't know what it is

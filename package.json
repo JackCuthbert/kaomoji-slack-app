@@ -1,10 +1,10 @@
 {
-  "name": "kaomoji-api",
+  "name": "kaomoji-bot",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "scrape": "rimraf ./results/* && node scraper.js",
+    "scrape": "rimraf ./kaomoji/* && node ./utils/scraper.js",
     "dev-api": "nodemon api.js",
     "dev-discord": "nodemon discord.js",
     "api": "node api.js",

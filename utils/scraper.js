@@ -15,7 +15,7 @@ function processEmoji (category) {
     const emoji = obj.filter(emoji => emoji !== '');
 
     // Write out our category file
-    jsonfile.writeFile(`./results/${category}.json`, emoji, (err) => {
+    jsonfile.writeFile(`./kaomoji/${category}.json`, emoji, (err) => {
       if (err) { console.error(err); return; };
       console.log(`${category}.json written!`);
     });
