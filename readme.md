@@ -53,7 +53,7 @@ Run `yarn discord`, `node discord.js`, or `npm run discord`.
 
 [Create a new Slash Command](https://slack.com/apps/A0F82E8CA-slash-commands) for your team.
 
-Set the URL in settings to `http://yourhost.com/slack/` with `GET` method enabled. Complete the rest of the form as desired!
+Set the URL in settings to `https://kaomoji-bot-slack.herokuapp.com/slack/` (or your own URL if you're hosting this yourself) with `GET` method enabled. Complete the rest of the form as desired!
 
 ## Todo
 
