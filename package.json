@@ -6,8 +6,10 @@
   "scripts": {
     "scrape": "rimraf ./kaomoji/* && node ./utils/scraper.js",
     "dev-api": "nodemon api.js",
+    "dev-slack": "nodemon slack.js",
     "dev-discord": "nodemon discord.js",
     "api": "node api.js",
+    "slack": "node slack.js",
     "discord": "node discord.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -20,6 +22,10 @@
     "x-ray": "^2.3.1"
   },
   "devDependencies": {
+    "eslint": "^3.15.0",
+    "eslint-config-airbnb-base": "^11.0.1",
+    "eslint-plugin-import": "^2.2.0",
+    "ngrok": "^2.2.6",
     "nodemon": "^1.11.0",
     "rimraf": "^2.5.4"
   }

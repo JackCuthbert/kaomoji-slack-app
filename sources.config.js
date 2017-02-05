@@ -19,4 +19,4 @@ module.exports = {
   sad: 'http://japaneseemoticons.me/sad-emoticons/',
   scared: 'http://japaneseemoticons.me/scared-emoticons/',
   worried: 'http://japaneseemoticons.me/worried-emoticons/',
-}
+};

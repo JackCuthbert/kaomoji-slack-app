@@ -12,7 +12,7 @@ client.connect({
   token: process.env.DISCORD_CLIENT_SECRET,
 });
 
-client.Dispatcher.on(Events.GATEWAY_READY, (e) => {
+client.Dispatcher.on(Events.GATEWAY_READY, () => {
   console.log(`Connected as: ${client.User.username}`);
 });
 
@@ -26,21 +26,18 @@ client.Dispatcher.on(Events.MESSAGE_CREATE, (e) => {
     if (params.length !== 2 || params[1] === 'help') {
       const feelings = Object.keys(sources).join(', ');
       e.message.channel.sendMessage(`Use: /kaomoji <feeling>\nAvailable: ${feelings}`);
-
     } else {
       // Read in the feeling file in the results directory
       const fileName = `./kaomoji/${params[1]}.json`;
       jsonfile.readFile(fileName, (err, obj) => {
-
         // Usually means it's not found, so bot doesn't know what it is
         if (err) {
-          e.message.channel.sendMessage(`I don't know what that is! ໒( •́ ∧ •̀ )७`);
+          e.message.channel.sendMessage('I don\'t know what that is! ໒( •́ ∧ •̀ )७');
           return;
         }
 
         e.message.channel.sendMessage(chooseEmoji(obj));
       });
-
     }
   }
 });
