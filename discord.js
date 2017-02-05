@@ -9,7 +9,7 @@ const sources = require('./sources.config');
 const jsonfile = require('jsonfile');
 
 client.connect({
-  token: process.env.DISCORD_CLIENT_SECRET,
+  token: process.env.DISCORD_BOT_TOKEN,
 });
 
 client.Dispatcher.on(Events.GATEWAY_READY, () => {
