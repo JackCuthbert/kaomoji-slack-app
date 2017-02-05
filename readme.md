@@ -45,6 +45,8 @@ Visit [My Apps](https://discordapp.com/developers/applications/me) to set up a n
 
 Set `DISCORD_BOT_TOKEN` environment variable to the App Bot User Token in the My Apps page.
 
+This does not support Oauth, only use as a private bot.
+
 Run `yarn discord`, `node discord.js`, or `npm run discord`.
 
 ### Slack
