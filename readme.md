@@ -15,7 +15,7 @@ If you don't want to install all 470MB+ worth of Noto fonts, see the contents of
 
 [Create a new Slash Command](https://slack.com/apps/A0F82E8CA-slash-commands) for your team.
 
-**URL:** https://kaomoji-bot-slack.herokuapp.com/slack/  
+**URL:** https://kaomoji-bot-slack.herokuapp.com/  
 **Method:** GET  
 **Description:** Get a random kaomoji!  
 **Usage hint:** feeling ("help" for available feelings)
@@ -29,9 +29,7 @@ Commands should be consistent across Discord and Slack.
 
 ## Scraping ヘ（゜◇、゜）ノ
 
-The scraper in `./utils/scraper.js` will grab a heap of kaomoji from the sources defined in `./sources.config.js`. It currently only works for those sources. It's probably not a good idea to run this very often. Results of scraping are store in `./kaomoji` as json files and committed to the repo to be used in deployed apps.
-
-Run the scraper with `yarn scrape` or `npm run scrape`.
+TODO
 
 ## Deployment (•̀ᴗ•́)൬༉
 

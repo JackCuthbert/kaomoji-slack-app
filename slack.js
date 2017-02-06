@@ -9,7 +9,7 @@ const chooseEmoji = require('./utils/chooseEmoji');
 
 const port = process.env.PORT || 3000;
 
-app.get('/slack/', (req, res) => {
+app.get('/', (req, res) => {
   const { text } = req.query;
 
   if (text === 'help') {

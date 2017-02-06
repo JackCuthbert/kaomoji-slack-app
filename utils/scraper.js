@@ -4,39 +4,39 @@ jsonfile.spaces = 2;
 const x = require('x-ray');
 const xray = x();
 
-const sources = require('../sources.config');
+xray('http://japaneseemoticons.me/', ['.menu-item .sub-menu li a@href'])((err, obj) => {
+  const urls = obj.filter(url => !url.includes('#') && url.includes('emoticons.me') && !url.includes('master'));
 
-function processEmoji(category) {
-  return (cbErr, obj) => {
-    if (cbErr) { console.error(`xray error: ${cbErr}`); return; }
+  urls.forEach((url) => {
+    // console.log(`Scraping category: ${url}...`);
+    const pageString = '.entry-content p:last-child a';
 
-    // Remove empty results
-    const emojis = obj.filter(emoji => emoji !== '');
+    // Work out how many pages
+    let pageTitle = '';
 
-    // Write out our category file
-    jsonfile.writeFile(`./kaomoji/${category}.json`, emojis, (err) => {
-      if (err) { console.error(err); return; }
-      console.log(`${category}.json written!`);
+    // Find page titles for each category
+    xray(url, 'h1.entry-title', '')((titleErr, title) => {
+      if (titleErr) { console.error(err); return; }
+      pageTitle = title;
+
+      // Find the number of pages per category
+      xray(url, pageString, '')((limitErr, pages) => {
+        if (limitErr) { console.error(err); return; }
+
+        // Scrape emoji with limits!
+        xray(url, '.copyjava tr', ['td'])
+          .limit(pages.length)
+          // .limit(1)
+          .paginate(`${pageString}:last-child@href`)((emojiErr, emojiObj) => {
+            if (emojiErr) { console.error(err); return; }
+
+            // Write the whole thing to a category file
+            jsonfile.writeFile(`./mega-kaomoji/${pageTitle}.json`, { category: pageTitle, emoji: emojiObj }, (writeErr) => {
+              if (writeErr) console.log(writeErr);
+              console.log(`${pageTitle} scraped!`);
+            });
+          });
+      });
     });
-  };
-}
-
-const categories = Object.keys(sources);
-
-categories.forEach((category) => {
-  console.log(`Scraping category: ${category}...`);
-  const pageString = '.entry-content p:last-child a';
-
-  // Work out how many pages
-  let numPages = 0;
-  xray(sources[category], pageString, [''])((err, item) => {
-    if (err) { console.error(err); return; }
-
-    numPages = item.length;
-
-    // Scrape emoji with limits!
-    xray(sources[category], '.copyjava tr', ['td'])
-      .limit(numPages)
-      .paginate(`${pageString}:last-child@href`)(processEmoji(category));
   });
 });
