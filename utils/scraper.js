@@ -9,18 +9,16 @@ xray('http://japaneseemoticons.me/', ['.menu-item .sub-menu li a@href'])((err, o
 
   urls.forEach((url) => {
     // console.log(`Scraping category: ${url}...`);
-    const pageString = '.entry-content p:last-child a';
-
-    // Work out how many pages
-    let pageTitle = '';
 
     // Find page titles for each category
+    let pageTitle = '';
     xray(url, 'h1.entry-title', '')((titleErr, title) => {
-      if (titleErr) { console.error(err); return; }
+      if (titleErr) { console.error(titleErr); return; }
+      const pageString = '.entry-content p:last-child a';
       pageTitle = title;
 
       // Find the number of pages per category
-      xray(url, pageString, '')((limitErr, pages) => {
+      xray(url, pageString, [''])((limitErr, pages) => {
         if (limitErr) { console.error(err); return; }
 
         // Scrape emoji with limits!
