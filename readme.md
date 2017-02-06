@@ -2,6 +2,15 @@
 
 Because why not? ┐(‘д’)┌
 
+## Important ( ⁰д⁰)
+
+Not all of the characters are supported in all operating systems by default. I've found that the best coverage is acquired by installing the [Google Noto fonts](https://www.google.com/get/noto/):
+
+* All Languages ([AUR package](https://www.archlinux.org/packages/extra/any/noto-fonts/))
+* All CJK Fonts ([AUR Package](https://www.archlinux.org/packages/extra/any/noto-fonts-cjk/))
+
+If you don't want to install all 470MB+ worth of Noto fonts, see the contents of the linked AUR packages for which ones to install. _(This is only tested under Arch Linux with Gnome!)_
+
 ## Usage
 
 ### Discord
@@ -15,7 +24,6 @@ Because why not? ┐(‘д’)┌
 `/kaomoji help` - See available feelings
 
 ### Scraping
-
 
 The scraper in `./utils/scraper.js` will grab a heap of kaomoji from the sources defined in `./sources.config.js`. It currently only works for those sources. It's probably not a good idea to run this very often. Results of scraping are store in `./kaomoji` as json files and committed to the repo to be used in deployed apps.
 
