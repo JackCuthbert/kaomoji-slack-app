@@ -33,15 +33,7 @@ TODO
 
 ## Deployment (•̀ᴗ•́)൬༉
 
-Default: slack bot
-
-This app is designed to be deployed on heroku and can run a couple of different things. Modify the `Procfile` to run what you need.
-
-```
-web: node api.js
-web: node slack.js
-web: node discord.js
-```
+TODO
 
 ### Discord
 
