@@ -1,3 +1,3 @@
-module.exports = function chooseEmoji(arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
+module.exports = function chooseEmoji(obj) {
+  return obj.emoji[Math.floor(Math.random() * obj.emoji.length)];
 };
