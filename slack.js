@@ -35,9 +35,11 @@ app.get('/', (req, res) => {
         text: getHelpList(),
       });
       break;
-    case 'about':
-      res.send('something');
-      break;
+    // case 'about':
+    //   res.send({
+    //
+    //   })
+    //   break;
     default: {
       const fileName = `./kaomoji/${text}.json`;
       fs.exists(fileName, (exists) => {
