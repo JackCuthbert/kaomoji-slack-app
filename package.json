@@ -4,13 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "scrape": "rimraf ./kaomoji/* && node ./utils/scraper.js",
-    "dev-api": "nodemon api.js",
-    "dev-slack": "nodemon slack.js",
-    "dev-discord": "nodemon discord.js",
-    "api": "node api.js",
-    "slack": "node slack.js",
-    "discord": "node discord.js",
+    "dev": "nodemon server.js",
+    "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Jack Cuthbert <jckcthbrt@gmail.com>",
