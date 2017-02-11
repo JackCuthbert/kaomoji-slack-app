@@ -1,29 +1,32 @@
-const { getHelpList } = require('./utils/kaomoji');
-const handleCommand = require('./utils/handleCommand');
-
 const Message = require('../../models/Message');
 
 exports.index = (req, res) => {
-  const { text } = req.query;
-
-  // Route commands to appropriate functions
-  switch (text) {
-    case 'help':
-      res.json({ type: 'ephemeral', text: getHelpList() });
-      break;
-    default: {
-      handleCommand(text, res);
-    }
-  }
-};
-
-exports.test = (req, res) => {
-  console.log(req.body);
-
   if (req.body.token !== process.env.SLACK_VERIFICATION_TOKEN) {
     res.send('Please add the Kaomoji App to your team');
     return;
   }
 
-  Message.send(res, req.body);
+  // Communicate with slack server to send the message
+  const { team_id, channel_id, user_id, text } = req.body;
+  console.log(req.body);
+
+  // Send an immediate response so that it doesn't timeout
+  // TODO: Can we update this after a successful message is sent?
+  res.send({
+    response_type: 'ephemeral',
+    text: 'Searching...',
+  });
+
+  // Send the message!
+  Message.send(team_id, channel_id, user_id, text)
+    .then((response) => {
+      console.log('Kaomoji response sent:', response.data);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.json({
+        response_type: 'ephemeral',
+        text: 'Something went wrong!',
+      });
+    });
 };

@@ -17,8 +17,9 @@ exports.callback = (req, res) => {
 
     if (ok) {
       Team.create(team_id, access_token)
-        .then((msg) => {
-          res.send(msg);
+        .then(() => {
+          res.status(200);
+          res.redirect('/connected');
         })
         .catch((err) => {
           console.error(err);
