@@ -6,8 +6,22 @@ const fs = require('fs');
 // Emoji lib
 const jsonfile = require('jsonfile');
 const chooseEmoji = require('./utils/chooseEmoji');
+const keywordLib = require('./utils/keywordLib');
 
 const port = process.env.PORT || 3000;
+
+function resolveInput(input, library) {
+  const resolvedKey = Object.keys(library).filter(key => library[key].indexOf(input) !== -1);
+
+  if (resolvedKey.length > 0) {
+    // Temporarily returning first
+    // There could be multiple response keys though because
+    // of crossover of terms associated with multiple keys
+    return resolvedKey[0];
+  }
+
+  return 'help';
+}
 
 function getHelpList() {
   const feelings = [];
@@ -26,7 +40,7 @@ function getErrorText() {
 }
 
 app.get('/', (req, res) => {
-  const { text } = req.query;
+  const text = resolveInput(req.query.text, keywordLib);
 
   switch (text) {
     case 'help':
@@ -35,11 +49,6 @@ app.get('/', (req, res) => {
         text: getHelpList(),
       });
       break;
-    // case 'about':
-    //   res.send({
-    //
-    //   })
-    //   break;
     default: {
       const fileName = `./kaomoji/${text}.json`;
       fs.exists(fileName, (exists) => {
