@@ -19,9 +19,6 @@ exports.index = (req, res) => {
 
   // Send the message!
   Message.send(team_id, channel_id, user_id, text, response_url)
-    .then((response) => {
-      console.log('Kaomoji response sent:', response.data);
-    })
     .catch((err) => {
       console.error(err);
       res.json({

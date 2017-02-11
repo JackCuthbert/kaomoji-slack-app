@@ -20,9 +20,19 @@ exports.send = (teamId, channelId, userId, text, delayedUrl) => {
       return axios.post('https://slack.com/api/chat.postMessage', querystring.stringify({
         token: team.bot_access_token,
         channel: channelId,
-        as_user: false,
-        username: 'Some Bot Name',
+        as_user: true,
         text: buildString(text),
-      }));
+      }))
+      .then((res) => {
+        if (!res.data.ok && res.data.error === 'not_in_channel') {
+          return axios.post(delayedUrl, {
+            token: team.access_token,
+            response_type: 'ephemeral',
+            text: 'Invite your Kaomoji bot to this channel! 「(°ヘ°)',
+          });
+        }
+
+        return res;
+      });
     });
 };

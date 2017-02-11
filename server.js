@@ -19,6 +19,9 @@ const authController = require('./controllers/auth');
 // Slack Routes
 app.post('/app', botController.index);
 app.get('/connect', authController.callback);
+app.get('/addtoslack', (req, res) => {
+  res.redirect('https://slack.com/oauth/authorize?scope=commands,bot,chat:write:bot&client_id=137226021060.138456996515');
+});
 
 // TODO: View engine
 // Add to slack button
