@@ -40,3 +40,20 @@ exports.create = (teamId, accessToken) => {
       });
     });
 };
+
+exports.find = (teamId) => {
+  return connect()
+    .then(() => {
+      return new Promise((resolve, reject) => {
+        const query = 'SELECT team_id, access_token FROM teams WHERE team_id = $1';
+        client.query({ text: query, values: [teamId] }, (queryError, result) => {
+          if (queryError) reject(queryError);
+
+          client.end((err) => {
+            if (err) reject(err);
+            resolve(result.rows[0]);
+          });
+        });
+      });
+    });
+};
