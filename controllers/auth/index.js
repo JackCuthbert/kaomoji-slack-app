@@ -12,11 +12,11 @@ exports.callback = (req, res) => {
     code,
   }))
   .then((response) => {
-    const { ok, team_id, access_token } = response.data;
-    console.log(response.data);
+    const { ok, team_id, access_token, bot } = response.data;
+    const { bot_access_token, bot_user_id } = bot;
 
     if (ok) {
-      Team.create(team_id, access_token)
+      Team.create(team_id, access_token, bot_user_id, bot_access_token)
         .then(() => {
           res.status(200);
           res.redirect('/connected');

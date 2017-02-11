@@ -32,7 +32,7 @@ function find(teamId) {
   return connect()
     .then(() => {
       return new Promise((resolve, reject) => {
-        const query = 'SELECT team_id, access_token FROM teams WHERE team_id = $1';
+        const query = 'SELECT team_id, access_token, bot_user_id, bot_access_token FROM teams WHERE team_id = $1';
         client.query({ text: query, values: [teamId] })
           .then((result) => {
             client.end((err) => {
@@ -49,12 +49,12 @@ function find(teamId) {
 // 1. Attempt to create the team
 // 2. If it fails with a duplicate key error perform an update operation
 // 3. Otherwise, ┻━┻ ︵ ¯\ (ツ)/¯ ︵ ┻━┻
-exports.create = (teamId, accessToken) => {
+exports.create = (teamId, accessToken, botUserId, botAccessToken) => {
   return connect()
     .then(() => {
       return new Promise((resolve, reject) => {
-        const query = 'INSERT INTO teams(team_id, access_token) VALUES($1, $2) RETURNING team_id';
-        client.query({ text: query, values: [teamId, accessToken] })
+        const query = 'INSERT INTO teams(team_id, access_token, bot_user_id, bot_access_token) VALUES($1, $2, $3, $4) RETURNING team_id';
+        client.query({ text: query, values: [teamId, accessToken, botUserId, botAccessToken] })
           .then((createResult) => {
             client.end((err) => {
               if (err) reject(err);

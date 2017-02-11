@@ -14,13 +14,14 @@ function buildString(text) {
 }
 
 // Send a message on behalf of the user that typed it
-exports.send = (teamId, channelId, userId, text) => {
+exports.send = (teamId, channelId, userId, text, delayedUrl) => {
   return Team.find(teamId)
     .then((team) => {
       return axios.post('https://slack.com/api/chat.postMessage', querystring.stringify({
-        token: team.access_token,
+        token: team.bot_access_token,
         channel: channelId,
-        as_user: true,
+        as_user: false,
+        username: 'Some Bot Name',
         text: buildString(text),
       }));
     });

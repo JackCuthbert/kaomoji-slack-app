@@ -1,4 +1,4 @@
-# kaomoji-bot
+# kaomoji-bot [![Build Status](https://travis-ci.org/JackCuthbert/kaomoji-bot.svg?branch=master)](https://travis-ci.org/JackCuthbert/kaomoji-bot)
 
 Because why not? ┐(´∀｀)┌
 
@@ -23,19 +23,16 @@ If you don't want to install all 470MB+ worth of Noto fonts, see the contents of
 
 ## Installation ╰། ❛ ൧̑ ❛ །╯
 
-[Create a new Slash Command](https://slack.com/apps/A0F82E8CA-slash-commands) for your team.
+Visit: [Some Link](http://localhost/).
 
-**URL:** https://kaomoji-bot-slack.herokuapp.com/  
-**Method:** GET  
-**Description:** Get a random kaomoji!  
-**Usage hint:** feeling ("help" for available feelings)
+
 
 ## Usage ⚈ ̫ ⚈
 
 Commands should be consistent across Discord and Slack.
 
-`/kaomoji <feeling>` - Send a kaomoji  
-`/kaomoji help` - See available feelings
+`/kaomoji <feeling> [optional message]` - Send a kaomoji  
+`/kaomoji help` - See usage information
 
 ## Scraping ヘ（゜◇、゜）ノ
 
@@ -44,16 +41,6 @@ TODO
 ## Deployment (•̀ᴗ•́)൬༉
 
 TODO
-
-### Discord
-
-Visit [My Apps](https://discordapp.com/developers/applications/me) to set up a new Discord App.
-
-Set `DISCORD_BOT_TOKEN` environment variable to the App Bot User Token in the My Apps page.
-
-This does not support Oauth, only use as a private bot.
-
-Run `yarn discord`, `node discord.js`, or `npm run discord`.
 
 ---
 
