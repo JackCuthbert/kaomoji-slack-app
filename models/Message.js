@@ -4,20 +4,21 @@ const kaomojiAsscLib = require('./Kaomoji');
 
 const Team = require('./Team');
 
-function resolveInput(input, library) {
-  const resolvedKey = Object.keys(library).filter(key => library[key].indexOf(input) !== -1);
+const resolveInput = function resolveInput(input, library) {
+  if (typeof input !== 'string') return 'help';
+  const resolvedKey = Object.keys(library).filter(key => library[key].indexOf(input.toLowerCase()) !== -1);
 
   if (resolvedKey.length > 0) {
     return resolvedKey[0];
   }
 
   return 'help';
-}
+};
 
 // TODO: Replace with kaomoji resource
-function buildString(text, userName) {
+function buildString(text, userName, library) {
   const parts = text.split(' ');
-  const kaomoji = resolveInput(parts[0], kaomojiAsscLib);
+  const kaomoji = resolveInput(parts[0], library);
   const message = text
     .split(' ')
     .splice(1, parts.length)
@@ -40,7 +41,7 @@ exports.send = (teamId, channelId, userName, text, delayedUrl) => (
         token: team.bot_access_token,
         channel: channelId,
         as_user: true,
-        text: buildString(text, userName),
+        text: buildString(text, userName, kaomojiAsscLib),
       }))
       .then((res) => {
         // If it failed, it's likely that the bot is not_in_channel. Send
@@ -57,3 +58,5 @@ exports.send = (teamId, channelId, userName, text, delayedUrl) => (
       })
     ))
 );
+
+exports.resolveInput = resolveInput;
