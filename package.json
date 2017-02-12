@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon index.js",
     "start": "node index.js",
-    "test": "eslint . && echo \"Error: no test specified\" && exit 0"
+    "test": "eslint . && mocha ./test/*"
   },
   "author": "Jack Cuthbert <jckcthbrt@gmail.com>",
   "license": "MIT",
