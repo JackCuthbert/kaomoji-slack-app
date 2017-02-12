@@ -45,39 +45,25 @@ function find(teamId) {
 }
 
 // Create a new team in the database
-
-// 1. Attempt to create the team
-// 2. If it fails with a duplicate key error perform an update operation
-// 3. Otherwise, ┻━┻ ︵ ¯\ (ツ)/¯ ︵ ┻━┻
+// 1. Attempt to create the team with an upsert query
+// 2. Otherwise, ┻━┻ ︵ ¯\ (ツ)/¯ ︵ ┻━┻
 exports.create = (teamId, accessToken, botUserId, botAccessToken) => {
   return connect()
     .then(() => {
       return new Promise((resolve, reject) => {
-        const query = 'INSERT INTO teams(team_id, access_token, bot_user_id, bot_access_token) VALUES($1, $2, $3, $4) RETURNING team_id';
-        client.query({ text: query, values: [teamId, accessToken, botUserId, botAccessToken] })
+        const upsert = `
+          INSERT INTO teams(team_id, access_token, bot_user_id, bot_access_token)
+          VALUES($1, $2, $3, $4)
+          ON CONFLICT (team_id)
+          DO UPDATE SET access_token = $2, bot_user_id = $3, bot_access_token = $4, updated_at = current_timestamp
+          RETURNING team_id;
+        `;
+        client.query({ text: upsert, values: [teamId, accessToken, botUserId, botAccessToken] })
           .then((createResult) => {
             client.end((err) => {
               if (err) reject(err);
               resolve(`Team Created: ${createResult.rows[0].team_id}`);
             });
-          })
-          // TODO: Clean this up
-          .catch((queryError) => {
-            // If there's a duplicate team id, perform an update with the new access token
-            if (queryError.code === '23505') {
-              console.log('create() failed, updating...');
-              const updateQuery = 'UPDATE teams SET access_token = $1 WHERE team_id = $2 RETURNING team_id';
-
-              client.query({ text: updateQuery, values: [accessToken, teamId] })
-                .then((updateResult) => {
-                  client.end((err) => {
-                    if (err) reject(err);
-                    resolve(`Team updated: ${updateResult.rows[0].team_id}`);
-                  });
-                });
-            } else {
-              reject(queryError);
-            }
           });
       });
     });

@@ -7,7 +7,7 @@ exports.index = (req, res) => {
   }
 
   // Communicate with slack server to send the message
-  const { team_id, channel_id, user_id, text, response_url } = req.body;
+  const { team_id, channel_id, user_name, text, response_url } = req.body;
   console.log(req.body);
 
   // Send an immediate response so that it doesn't timeout
@@ -18,7 +18,7 @@ exports.index = (req, res) => {
   });
 
   // Send the message!
-  Message.send(team_id, channel_id, user_id, text, response_url)
+  Message.send(team_id, channel_id, user_name, text, response_url)
     .catch((err) => {
       console.error(err);
       res.json({
