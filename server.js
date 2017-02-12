@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const app = express();
-const port = process.env.PORT || 3000;
 
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
@@ -34,6 +33,4 @@ app.get('/connected', (req, res) => {
   res.sendFile('connected.html', { root: './public' });
 });
 
-app.listen(port, () => {
-  console.log(`Slack App running on ${port}`);
-});
+module.exports = app;
