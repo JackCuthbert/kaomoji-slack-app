@@ -23,19 +23,18 @@
 //       bot_access_token: 'SOME_BOT_ACCESS_TOKEN',
 //     },
 //   });
-//
-// describe('first test', () => {
-//   before(() => {
-//
-//   });
-//
-//   it('returns 200', (done) => {
-//     // request(app)
-//     //   // .get('/connect')
-//     //   .end((err, res) => {
-//     //     expect(res.statusCode).to.equal(200);
-//     //     done();
-//     //   });
-//     done();
-//   });
-// });
+
+describe('Team', () => {
+  // before(() => {
+  //
+  // });
+
+  describe('#find', () => {
+    it('returns the team id and access token');
+  });
+
+  describe('#create', () => {
+    it('creates a new team in the database');
+    it('updates an existing team in the database');
+  });
+});
