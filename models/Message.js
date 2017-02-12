@@ -1,12 +1,23 @@
 const axios = require('axios');
 const querystring = require('querystring');
+const kaomojiAsscLib = require('./Kaomoji');
 
 const Team = require('./Team');
 
+function resolveInput(input, library) {
+  const resolvedKey = Object.keys(library).filter(key => library[key].indexOf(input) !== -1);
+
+  if (resolvedKey.length > 0) {
+    return resolvedKey[0];
+  }
+
+  return 'help';
+}
+
 // TODO: Replace with kaomoji resource
 function buildString(text, userName) {
-  const kaomoji = '<kaomoji here>';
   const parts = text.split(' ');
+  const kaomoji = resolveInput(parts[0], kaomojiAsscLib);
   const message = text
     .split(' ')
     .splice(1, parts.length)
