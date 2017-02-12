@@ -7,9 +7,9 @@ exports.callback = (req, res) => {
   const { code } = req.query;
 
   axios.post('https://slack.com/api/oauth.access', querystring.stringify({
-    client_id: process.env.SLACK_CLIENT_ID,
-    client_secret: process.env.SLACK_CLIENT_SECRET,
-    code,
+    client_id: process.env.SLACK_CLIENT_ID || '',
+    client_secret: process.env.SLACK_CLIENT_SECRET || '',
+    code: code || '',
   }))
   .then((response) => {
     const { ok, team_id, access_token, bot } = response.data;

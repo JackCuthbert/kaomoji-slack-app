@@ -47,8 +47,8 @@ function find(teamId) {
 // Create a new team in the database
 // 1. Attempt to create the team with an upsert query
 // 2. Otherwise, ┻━┻ ︵ ¯\ (ツ)/¯ ︵ ┻━┻
-exports.create = (teamId, accessToken, botUserId, botAccessToken) => (
-  connect()
+function create(teamId, accessToken, botUserId, botAccessToken) {
+  return connect()
     .then(() => (
       new Promise((resolve, reject) => {
         const upsert = `
@@ -66,7 +66,9 @@ exports.create = (teamId, accessToken, botUserId, botAccessToken) => (
             });
           });
       })
-    ))
-);
+    ));
+}
 
+exports.create = create;
+exports.connect = connect;
 exports.find = find;
