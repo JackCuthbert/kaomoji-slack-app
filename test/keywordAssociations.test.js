@@ -12,10 +12,6 @@ describe('resolveInput', () => {
     expect(resolveInput('UNHAPPY', kaomojiAsscLib)).to.equal('sad');
   });
 
-  it('returns "help" if non-string passed in', () => {
-    expect(resolveInput(42, kaomojiAsscLib)).to.equal('help');
-  });
-
   it('returns "help" when no associated text is found', () => {
     expect(resolveInput('blerg', kaomojiAsscLib)).to.equal('help');
   });

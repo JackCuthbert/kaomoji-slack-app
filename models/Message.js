@@ -5,7 +5,6 @@ const kaomojiAsscLib = require('./Kaomoji');
 const Team = require('./Team');
 
 const resolveInput = function resolveInput(input, library) {
-  if (typeof input !== 'string') return 'help';
   const resolvedKey = Object.keys(library).filter(key => library[key].indexOf(input.toLowerCase()) !== -1);
 
   if (resolvedKey.length > 0) {
@@ -17,6 +16,7 @@ const resolveInput = function resolveInput(input, library) {
 
 // TODO: Replace with kaomoji resource
 function buildString(text, userName, library) {
+  // @text will always be a string
   const parts = text.split(' ');
   const kaomoji = resolveInput(parts[0], library);
   const message = text
