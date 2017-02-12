@@ -1,38 +1,22 @@
 const axios = require('axios');
 const querystring = require('querystring');
-const kaomojiAsscLib = require('./Kaomoji');
-const fs = require('fs');
 
 const Team = require('./Team');
+const Kaomoji = require('./Kaomoji');
 
-function resolveInput(input, library) {
-  const resolvedKey = Object.keys(library).filter(key => library[key].indexOf(input.toLowerCase()) !== -1);
-
-  if (resolvedKey.length > 0) {
-    return resolvedKey[0];
-  }
-
-  return 'help';
-}
-
-function getKaomojiList(keyword) {
-  const path = './kaomoji';
-  const files = fs.readdirSync(path);
-  const kaomojiFile = files.find(file => file.includes(`${keyword}.json`));
-  return JSON.parse(fs.readFileSync(`${path}/${kaomojiFile}`));
-}
-
-function chooseEmoji(data) {
-  return data.emoji[Math.floor(Math.random() * data.emoji.length)];
-}
-
-// TODO: Replace with kaomoji resource
-function buildString(text, userName, library) {
-  // @text will always be a string
+/*
+ * Builds the string that will be sent by the slack bot.
+ * NOTE: text will always be a string
+ */
+exports.buildString = (text, userName) => {
   const parts = text.split(' ');
-  const keyword = resolveInput(parts[0], library);
-  const kaomojiList = getKaomojiList(keyword);
-  const kaomoji = chooseEmoji(kaomojiList);
+  const keyword = Kaomoji.resolveInput(parts[0]);
+  const kaomojiList = Kaomoji.getKaomojiList(keyword);
+
+  // Return undefined if there's no list.
+  if (!kaomojiList) return undefined;
+
+  const kaomoji = Kaomoji.chooseEmoji(kaomojiList);
   const message = text
     .split(' ')
     .splice(1, parts.length)
@@ -44,18 +28,34 @@ function buildString(text, userName, library) {
   }
 
   return `>>> ${message}  ${kaomoji}\n\n_— <@${userName}>_`;
-}
+};
 
-// Construct and sent a kaomoji message
-exports.send = (client, teamId, channelId, userName, text, responseUrl) => (
-  Team.find(client, teamId)
-    .then(team => (
+/* eslint arrow-body-style: 0*/
+/*
+ * Construct and sent a kaomoji message to the slack api
+ */
+exports.send = (client, teamId, channelId, userName, text, responseUrl) => {
+  return Team.find(client, teamId)
+    .then((team) => {
+      const message = this.buildString(text, userName);
+
+      // If message is undefined, we couldn't find a match
+      // TODO: Using undefined to work this out probably isn't the best way to
+      // do it. Fix later.
+      if (!message) {
+        return axios.post(responseUrl, {
+          token: team.access_token,
+          response_type: 'ephemeral',
+          text: 'I don\'t know what that is! .·´¯`(>▂<)´¯`·.',
+        });
+      }
+
       // Send a message as the bot user
-      axios.post('https://slack.com/api/chat.postMessage', querystring.stringify({
+      return axios.post('https://slack.com/api/chat.postMessage', querystring.stringify({
         token: team.bot_access_token,
         channel: channelId,
         as_user: true,
-        text: buildString(text, userName, kaomojiAsscLib),
+        text: message,
       }))
       .then((res) => {
         // If it failed, it's likely that the bot is not_in_channel. Send
@@ -72,10 +72,6 @@ exports.send = (client, teamId, channelId, userName, text, responseUrl) => (
       })
       .catch((err) => {
         console.err(err);
-      })
-    ))
-);
-
-exports.getKaomojiList = getKaomojiList;
-exports.resolveInput = resolveInput;
-exports.chooseEmoji = chooseEmoji;
+      });
+    });
+};

@@ -35,6 +35,7 @@ function create(client, teamId, accessToken, botUserId, botAccessToken) {
   });
 }
 
-exports.create = create;
-// exports.connect = connect;
-exports.find = find;
+module.exports = {
+  create,
+  find,
+};

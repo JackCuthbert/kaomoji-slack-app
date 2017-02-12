@@ -1,46 +1,26 @@
+/* eslint no-unused-vars: 0 */
+const sinon = require('sinon');
 const expect = require('chai').expect;
 const Message = require('../../models/Message');
-const kaomojiAsscLib = require('../../models/Kaomoji');
 
 describe('Message', () => {
-  describe('#getKaomojiList', () => {
-    it('returns the correct kaomoji file', () => {
-      expect(Message.getKaomojiList('happy').title).to.equal('happy');
-      expect(Message.getKaomojiList('pig').emoji.length).to.equal(100);
-    });
-  });
-
   describe('#send', () => {
     it('sends the correct message object to slack');
   });
 
   describe('#buildString', () => {
-    it('builds the correct message string');
-  });
-
-  describe('#chooseEmoji', () => {
-    it('returns a kaomoji from array of kaomoji', () => {
-      const fauxKaomoji = {
-        emoji: ['( ͡° ͜ʖ ͡°)', '∠( ᐛ 」∠)＿', '(ﾟ⊿ﾟ)', 'ᕕ( ᐛ )ᕗ', '_へ__(‾◡◝ )>'],
-      };
-
-      const kaomoji = Message.chooseEmoji(fauxKaomoji);
-      expect(fauxKaomoji.emoji.includes(kaomoji)).to.equal(true);
-    });
-  });
-
-  describe('#resolveInput', () => {
-    it('returns "happy" when associated text passed in', () => {
-      expect(Message.resolveInput('glad', kaomojiAsscLib)).to.equal('happy');
+    before(() => {
+      // Need to make sure they way we're choosing emoji is reliably for tests
+      sinon.stub(Math, 'floor').returns(4); // Totally random
     });
 
-    it('doesn\'t care about capitalization', () => {
-      expect(Message.resolveInput('Glad', kaomojiAsscLib)).to.equal('happy');
-      expect(Message.resolveInput('UNHAPPY', kaomojiAsscLib)).to.equal('sad');
+    it('returns the correct string', () => {
+      expect(Message.buildString('happy', 'some_user')).to.equal('>>> _へ__(‾◡◝ )>\n\n_— <@some_user>_');
+      expect(Message.buildString('happy with a sentence', 'some_user')).to.equal('>>> with a sentence  _へ__(‾◡◝ )>\n\n_— <@some_user>_');
     });
 
-    it('returns "help" when no associated text is found', () => {
-      expect(Message.resolveInput('blerg', kaomojiAsscLib)).to.equal('help');
+    it('returns undefined when no file matched', () => {
+      expect(Message.buildString('somestringwecantfind', 'some_user')).to.equal(undefined);
     });
   });
 });
