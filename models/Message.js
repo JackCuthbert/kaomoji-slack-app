@@ -15,11 +15,24 @@ function resolveInput(input, library) {
   return 'help';
 }
 
+function getKaomojiList(keyword) {
+  const path = './kaomoji';
+  const files = fs.readdirSync(path);
+  const kaomojiFile = files.find(file => file.includes(`${keyword}.json`));
+  return JSON.parse(fs.readFileSync(`${path}/${kaomojiFile}`));
+}
+
+function chooseEmoji(data) {
+  return data.emoji[Math.floor(Math.random() * data.emoji.length)];
+}
+
 // TODO: Replace with kaomoji resource
 function buildString(text, userName, library) {
   // @text will always be a string
   const parts = text.split(' ');
-  const kaomoji = resolveInput(parts[0], library);
+  const keyword = resolveInput(parts[0], library);
+  const kaomojiList = getKaomojiList(keyword);
+  const kaomoji = chooseEmoji(kaomojiList);
   const message = text
     .split(' ')
     .splice(1, parts.length)
@@ -31,13 +44,6 @@ function buildString(text, userName, library) {
   }
 
   return `>>> ${message}  ${kaomoji}\n\n_— <@${userName}>_`;
-}
-
-function getKaomojiList(keyword) {
-  const path = './kaomoji';
-  const files = fs.readdirSync(path);
-  const kaomojiFile = files.find(file => file.includes(`${keyword}.json`));
-  return JSON.parse(fs.readFileSync(`${path}/${kaomojiFile}`));
 }
 
 // Construct and sent a kaomoji message
@@ -72,3 +78,4 @@ exports.send = (client, teamId, channelId, userName, text, responseUrl) => (
 
 exports.getKaomojiList = getKaomojiList;
 exports.resolveInput = resolveInput;
+exports.chooseEmoji = chooseEmoji;
