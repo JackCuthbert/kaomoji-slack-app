@@ -5,10 +5,10 @@ function find(client, teamId) {
     const query = 'SELECT team_id, access_token, bot_user_id, bot_access_token FROM teams WHERE team_id = $1';
     client.query({ text: query, values: [teamId] })
       .then((result) => {
-        client.end((err) => {
-          if (err) reject(err);
-          resolve(result.rows[0]);
-        });
+        resolve(result.rows[0]);
+      })
+      .catch((err) => {
+        reject(err);
       });
   });
 }
