@@ -5,9 +5,13 @@
     "sourceType": "module",
     "ecmaFeatures": {}
   },
+  "env": {
+    "node": true,
+    "mocha": true
+  },
   "rules": {
-    "import/newline-after-import": 0,
-    "import/no-extraneous-dependencies": 0,
-    "no-console": 0
+    "no-console": 0,
+    "max-len": 0,
+    "global-require": 0
   }
 }

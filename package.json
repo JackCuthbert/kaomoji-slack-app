@@ -4,29 +4,34 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "scrape": "rimraf ./kaomoji/* && node ./utils/scraper.js",
-    "dev-api": "nodemon api.js",
-    "dev-slack": "nodemon slack.js",
-    "dev-discord": "nodemon discord.js",
-    "api": "node api.js",
-    "slack": "node slack.js",
-    "discord": "node discord.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon index.js",
+    "start": "node index.js",
+    "test": "eslint . && echo \"Error: no test specified\" && exit 0"
   },
   "author": "Jack Cuthbert <jckcthbrt@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.15.3",
+    "body-parser": "^1.16.1",
     "discordie": "^0.11.0",
+    "dotenv": "^4.0.0",
     "express": "^4.14.1",
     "jsonfile": "^2.4.0",
+    "pg": "^6.1.2",
     "x-ray": "^2.3.1"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
     "eslint": "^3.15.0",
     "eslint-config-airbnb-base": "^11.1.0",
     "eslint-plugin-import": "^2.2.0",
+    "mocha": "^3.2.0",
     "ngrok": "^2.2.6",
+    "nock": "^9.0.5",
     "nodemon": "^1.11.0",
-    "rimraf": "^2.5.4"
+    "rewire": "^2.5.2",
+    "rimraf": "^2.5.4",
+    "sinon": "^1.17.7",
+    "supertest": "^3.0.0"
   }
 }
