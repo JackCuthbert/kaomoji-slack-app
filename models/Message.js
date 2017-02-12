@@ -1,10 +1,11 @@
 const axios = require('axios');
 const querystring = require('querystring');
 const kaomojiAsscLib = require('./Kaomoji');
+const fs = require('fs');
 
 const Team = require('./Team');
 
-const resolveInput = function resolveInput(input, library) {
+function resolveInput(input, library) {
   const resolvedKey = Object.keys(library).filter(key => library[key].indexOf(input.toLowerCase()) !== -1);
 
   if (resolvedKey.length > 0) {
@@ -12,7 +13,7 @@ const resolveInput = function resolveInput(input, library) {
   }
 
   return 'help';
-};
+}
 
 // TODO: Replace with kaomoji resource
 function buildString(text, userName, library) {
@@ -30,6 +31,13 @@ function buildString(text, userName, library) {
   }
 
   return `>>> ${message}  ${kaomoji}\n\n_— <@${userName}>_`;
+}
+
+function getKaomojiList(keyword) {
+  const path = './kaomoji';
+  const files = fs.readdirSync(path);
+  const kaomojiFile = files.find(file => file.includes(`${keyword}.json`));
+  return JSON.parse(fs.readFileSync(`${path}/${kaomojiFile}`));
 }
 
 // Construct and sent a kaomoji message
@@ -62,4 +70,5 @@ exports.send = (client, teamId, channelId, userName, text, responseUrl) => (
     ))
 );
 
+exports.getKaomojiList = getKaomojiList;
 exports.resolveInput = resolveInput;
