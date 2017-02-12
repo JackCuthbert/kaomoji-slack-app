@@ -16,7 +16,7 @@ exports.callback = (req, res) => {
     const { bot_access_token, bot_user_id } = bot;
 
     if (ok) {
-      Team.create(team_id, access_token, bot_user_id, bot_access_token)
+      Team.create(req.dbClient, team_id, access_token, bot_user_id, bot_access_token)
         .then(() => {
           res.status(200);
           res.redirect('/connected');

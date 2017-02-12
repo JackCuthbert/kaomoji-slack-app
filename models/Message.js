@@ -33,8 +33,8 @@ function buildString(text, userName, library) {
 }
 
 // Construct and sent a kaomoji message
-exports.send = (teamId, channelId, userName, text, delayedUrl) => (
-  Team.find(teamId)
+exports.send = (client, teamId, channelId, userName, text, responseUrl) => (
+  Team.find(client, teamId)
     .then(team => (
       // Send a message as the bot user
       axios.post('https://slack.com/api/chat.postMessage', querystring.stringify({
@@ -47,7 +47,7 @@ exports.send = (teamId, channelId, userName, text, delayedUrl) => (
         // If it failed, it's likely that the bot is not_in_channel. Send
         // prompt output fot that
         if (!res.data.ok && res.data.error === 'not_in_channel') {
-          return axios.post(delayedUrl, {
+          return axios.post(responseUrl, {
             token: team.access_token,
             response_type: 'ephemeral',
             text: 'Invite your Kaomoji bot to this channel! 「(°ヘ°)',
@@ -55,6 +55,9 @@ exports.send = (teamId, channelId, userName, text, delayedUrl) => (
         }
 
         return res;
+      })
+      .catch((err) => {
+        console.err(err);
       })
     ))
 );

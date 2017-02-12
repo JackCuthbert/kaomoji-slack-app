@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const Database = require('./middleware/Database');
 
 const app = express();
 
@@ -10,6 +11,17 @@ if (process.env.NODE_ENV !== 'production') {
 // For processing slack requests
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(Database({
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  host: process.env.DB_HOST,
+  port: process.env.DB_POST,
+  ssl: {
+    rejectUnauthorized: process.env.NODE_ENV === 'production',
+  },
+}));
 
 // Controllers
 const botController = require('./controllers/bot');

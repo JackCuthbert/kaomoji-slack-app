@@ -16,7 +16,7 @@ exports.index = (req, res) => {
   });
 
   // Send the message!
-  Message.send(team_id, channel_id, user_name, text, response_url)
+  Message.send(req.dbClient, team_id, channel_id, user_name, text, response_url)
     .catch((err) => {
       console.error(err);
       res.json({
