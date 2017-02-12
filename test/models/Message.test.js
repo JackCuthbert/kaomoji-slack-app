@@ -18,6 +18,17 @@ describe('Message', () => {
     it('builds the correct message string');
   });
 
+  describe('#chooseEmoji', () => {
+    it('returns a kaomoji from array of kaomoji', () => {
+      const fauxKaomoji = {
+        emoji: ['( ͡° ͜ʖ ͡°)', '∠( ᐛ 」∠)＿', '(ﾟ⊿ﾟ)', 'ᕕ( ᐛ )ᕗ', '_へ__(‾◡◝ )>'],
+      };
+
+      const kaomoji = Message.chooseEmoji(fauxKaomoji);
+      expect(fauxKaomoji.emoji.includes(kaomoji)).to.equal(true);
+    });
+  });
+
   describe('#resolveInput', () => {
     it('returns "happy" when associated text passed in', () => {
       expect(Message.resolveInput('glad', kaomojiAsscLib)).to.equal('happy');
