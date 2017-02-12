@@ -18,7 +18,13 @@ function resolveInput(input, library) {
 function getKaomojiList(keyword) {
   const path = './kaomoji';
   const files = fs.readdirSync(path);
-  const kaomojiFile = files.find(file => file.includes(`${keyword}.json`));
+  let kaomojiFile;
+  // Default to `sad` if 'help' is passed in
+  if (keyword === 'help') {
+    kaomojiFile = files.find(file => file.includes('sad.json'));
+  } else {
+    kaomojiFile = files.find(file => file.includes(`${keyword}.json`));
+  }
   return JSON.parse(fs.readFileSync(`${path}/${kaomojiFile}`));
 }
 
