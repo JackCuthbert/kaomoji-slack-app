@@ -21,7 +21,7 @@ exports.index = (req, res) => {
       console.error(err);
       res.json({
         response_type: 'ephemeral',
-        text: 'Something went wrong!',
+        text: 'Something went wrong! o(╥﹏╥)o',
       });
     });
 };
