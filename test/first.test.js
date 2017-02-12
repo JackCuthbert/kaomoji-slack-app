@@ -42,4 +42,3 @@ describe('first test', () => {
     done();
   });
 });
->>>>>>> Nock/rewire derping
