@@ -1,6 +1,6 @@
 const jsonfile = require('jsonfile');
-
 const x = require('x-ray');
+
 const xray = x();
 
 // Write finalised emoji data to file

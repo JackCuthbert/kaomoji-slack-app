@@ -30,8 +30,8 @@ function connect() {
 // returns access_token and team_id
 function find(teamId) {
   return connect()
-    .then(() => {
-      return new Promise((resolve, reject) => {
+    .then(() => (
+      new Promise((resolve, reject) => {
         const query = 'SELECT team_id, access_token, bot_user_id, bot_access_token FROM teams WHERE team_id = $1';
         client.query({ text: query, values: [teamId] })
           .then((result) => {
@@ -40,17 +40,17 @@ function find(teamId) {
               resolve(result.rows[0]);
             });
           });
-      });
-    });
+      })
+    ));
 }
 
 // Create a new team in the database
 // 1. Attempt to create the team with an upsert query
 // 2. Otherwise, ┻━┻ ︵ ¯\ (ツ)/¯ ︵ ┻━┻
-exports.create = (teamId, accessToken, botUserId, botAccessToken) => {
-  return connect()
-    .then(() => {
-      return new Promise((resolve, reject) => {
+exports.create = (teamId, accessToken, botUserId, botAccessToken) => (
+  connect()
+    .then(() => (
+      new Promise((resolve, reject) => {
         const upsert = `
           INSERT INTO teams(team_id, access_token, bot_user_id, bot_access_token)
           VALUES($1, $2, $3, $4)
@@ -65,8 +65,8 @@ exports.create = (teamId, accessToken, botUserId, botAccessToken) => {
               resolve(`Team Created: ${createResult.rows[0].team_id}`);
             });
           });
-      });
-    });
-};
+      })
+    ))
+);
 
 exports.find = find;

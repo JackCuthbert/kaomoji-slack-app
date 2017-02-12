@@ -20,17 +20,20 @@ function buildString(text, userName) {
   return `>>> ${message}  ${kaomoji}\n\n_— <@${userName}>_`;
 }
 
-// Send a message on behalf of the user that typed it
-exports.send = (teamId, channelId, userName, text, delayedUrl) => {
-  return Team.find(teamId)
-    .then((team) => {
-      return axios.post('https://slack.com/api/chat.postMessage', querystring.stringify({
+// Construct and sent a kaomoji message
+exports.send = (teamId, channelId, userName, text, delayedUrl) => (
+  Team.find(teamId)
+    .then(team => (
+      // Send a message as the bot user
+      axios.post('https://slack.com/api/chat.postMessage', querystring.stringify({
         token: team.bot_access_token,
         channel: channelId,
         as_user: true,
         text: buildString(text, userName),
       }))
       .then((res) => {
+        // If it failed, it's likely that the bot is not_in_channel. Send
+        // prompt output fot that
         if (!res.data.ok && res.data.error === 'not_in_channel') {
           return axios.post(delayedUrl, {
             token: team.access_token,
@@ -40,6 +43,6 @@ exports.send = (teamId, channelId, userName, text, delayedUrl) => {
         }
 
         return res;
-      });
-    });
-};
+      })
+    ))
+);

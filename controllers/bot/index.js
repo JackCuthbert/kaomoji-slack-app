@@ -6,9 +6,7 @@ exports.index = (req, res) => {
     return;
   }
 
-  // Communicate with slack server to send the message
   const { team_id, channel_id, user_name, text, response_url } = req.body;
-  console.log(req.body);
 
   // Send an immediate response so that it doesn't timeout
   // TODO: Can we update this after a successful message is sent?
