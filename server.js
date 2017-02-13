@@ -21,8 +21,8 @@ app.use(Database({
 }));
 
 // Controllers
-const botController = require('./controllers/bot');
-const authController = require('./controllers/auth');
+const botController = require('./controllers/botController');
+const authController = require('./controllers/authController');
 
 // Slack Routes
 app.post('/app', botController.index);

@@ -1,4 +1,4 @@
-const Message = require('../../services/Message');
+const Message = require('../services/Message');
 
 exports.index = (req, res) => {
   if (req.body.token !== process.env.SLACK_VERIFICATION_TOKEN) {

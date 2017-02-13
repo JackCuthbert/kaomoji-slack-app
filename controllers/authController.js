@@ -1,7 +1,7 @@
 const axios = require('axios');
 const querystring = require('querystring');
 
-const Team = require('../../services/Team');
+const Team = require('../services/Team');
 
 exports.callback = (req, res) => {
   const { code } = req.query;
