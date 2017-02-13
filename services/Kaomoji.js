@@ -1,5 +1,44 @@
+const fs = require('fs');
+
+/*
+ * Use the associations list object to resolve the keyword to a specific kaomoji
+ * file.
+ */
+exports.resolveInput = (input) => {
+  const resolvedKey = Object.keys(this.associationList)
+    .filter(key => this.associationList[key].includes(input.toLowerCase()));
+
+  if (resolvedKey.length > 0) {
+    return resolvedKey[0];
+  }
+
+  return 'help';
+};
+
+/*
+ * Get the object in a kaomoji file.
+ */
+exports.getKaomojiList = (keyword) => {
+  const path = './kaomoji';
+  const files = fs.readdirSync(path);
+  const kaomojiFile = files.find(file => file.includes(`${keyword}.json`));
+
+  // Return the json object if the file is found, otherwise we still want to
+  // return the result of .find()
+  return kaomojiFile ? JSON.parse(fs.readFileSync(`${path}/${kaomojiFile}`)) : kaomojiFile;
+};
+
+/*
+ * Randomly choose an emoji from a supplied kaomoji file object.
+ */
+exports.chooseEmoji = data => data.emoji[Math.floor(Math.random() * data.emoji.length)];
+
 /* eslint quote-props: 0 */
-module.exports = {
+/*
+ * Master list of kaomoji associations
+ * TODO: Can we deal with this another way?
+ */
+exports.associationList = {
   'happy': ['happy', 'glad', 'positive', 'yay'],
   'sad': ['sad', 'unhappy', 'depressed', 'cry', 'crying', 'depressed'],
   'angry': ['angry', 'annoyed', 'bitter', 'enraged', 'exasperated', 'furious', 'heated', 'impassioned', 'indignant', 'irate', 'irritable', 'irritated', 'offended', 'outraged', 'resentful', 'sullen', 'uptight'],

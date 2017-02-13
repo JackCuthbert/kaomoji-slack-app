@@ -18,14 +18,11 @@ app.use(Database({
   database: process.env.DB_NAME,
   host: process.env.DB_HOST,
   port: process.env.DB_POST,
-  ssl: {
-    rejectUnauthorized: process.env.NODE_ENV === 'production',
-  },
 }));
 
 // Controllers
-const botController = require('./controllers/bot');
-const authController = require('./controllers/auth');
+const botController = require('./controllers/botController');
+const authController = require('./controllers/authController');
 
 // Slack Routes
 app.post('/app', botController.index);
