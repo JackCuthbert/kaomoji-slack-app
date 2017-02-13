@@ -1,5 +1,5 @@
 const expect = require('chai').expect;
-const Kaomoji = require('../../models/Kaomoji');
+const Kaomoji = require('../../services/Kaomoji');
 
 describe('Kaomoji', () => {
   describe('#getKaomojiList', () => {

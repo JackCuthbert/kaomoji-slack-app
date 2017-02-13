@@ -1,7 +1,7 @@
 // Find the team by id
 // returns access_token and team_id
-function find(client, teamId) {
-  return new Promise((resolve, reject) => {
+exports.find = (client, teamId) => (
+  new Promise((resolve, reject) => {
     const query = 'SELECT team_id, access_token, bot_user_id, bot_access_token FROM teams WHERE team_id = $1';
     client.query({ text: query, values: [teamId] })
       .then((result) => {
@@ -10,14 +10,14 @@ function find(client, teamId) {
       .catch((err) => {
         reject(err);
       });
-  });
-}
+  })
+);
 
 // Create a new team in the database
 // 1. Attempt to create the team with an upsert query
 // 2. Otherwise, ┻━┻ ︵ ¯\ (ツ)/¯ ︵ ┻━┻
-function create(client, teamId, accessToken, botUserId, botAccessToken) {
-  return new Promise((resolve, reject) => {
+exports.create = (client, teamId, accessToken, botUserId, botAccessToken) => (
+  new Promise((resolve, reject) => {
     const upsert = `
       INSERT INTO teams(team_id, access_token, bot_user_id, bot_access_token)
       VALUES($1, $2, $3, $4)
@@ -32,10 +32,5 @@ function create(client, teamId, accessToken, botUserId, botAccessToken) {
       .catch((err) => {
         reject(err);
       });
-  });
-}
-
-module.exports = {
-  create,
-  find,
-};
+  })
+);

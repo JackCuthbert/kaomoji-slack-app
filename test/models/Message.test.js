@@ -1,7 +1,7 @@
 /* eslint no-unused-vars: 0 */
 const sinon = require('sinon');
 const expect = require('chai').expect;
-const Message = require('../../models/Message');
+const Message = require('../../services/Message');
 
 describe('Message', () => {
   describe('#send', () => {

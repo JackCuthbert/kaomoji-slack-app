@@ -18,9 +18,6 @@ app.use(Database({
   database: process.env.DB_NAME,
   host: process.env.DB_HOST,
   port: process.env.DB_POST,
-  ssl: {
-    rejectUnauthorized: process.env.NODE_ENV === 'production',
-  },
 }));
 
 // Controllers
