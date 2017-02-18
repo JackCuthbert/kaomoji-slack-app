@@ -3,7 +3,6 @@ const onFinished = require('on-finished');
 
 exports.credentials = () => {
   if (process.env.NODE_ENV === 'test') {
-    console.log('Environment is test');
     return {
       user: 'postgres',
       password: '',
