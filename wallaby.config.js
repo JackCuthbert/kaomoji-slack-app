@@ -1,10 +1,15 @@
 module.exports = () => ({
-  files: [
-    'services/**/*.js',
-  ],
-  tests: [
-    'test/**/*.test.js',
-  ],
+  files: [{
+    pattern: 'services/**/*.js',
+    load: true,
+  }, {
+    pattern: 'kaomoji/*.json',
+    load: true,
+  }],
+  tests: [{
+    pattern: 'test/**/*.test.js',
+    load: true,
+  }],
   env: {
     type: 'node',
   },
