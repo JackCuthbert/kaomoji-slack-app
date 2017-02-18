@@ -19,7 +19,7 @@ exports.resolveInput = (input) => {
  * Get the object in a kaomoji file.
  */
 exports.getKaomojiList = (keyword) => {
-  const path = './kaomoji';
+  const path = '../kaomoji';
   const files = fs.readdirSync(path);
   const kaomojiFile = files.find(file => file.includes(`${keyword}.json`));
 
