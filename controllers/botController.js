@@ -10,10 +10,12 @@ exports.index = (req, res) => {
 
   // Send an immediate response so that it doesn't timeout
   // TODO: Can we update this after a successful message is sent?
-  res.send({
-    response_type: 'ephemeral',
-    text: 'Searching...',
-  });
+  if (process.env.NODE_ENV !== 'production') {
+    res.send({
+      response_type: 'ephemeral',
+      text: 'Searching...',
+    });
+  }
 
   // Send the message!
   Message.send(req.dbClient, team_id, channel_id, user_name, text, response_url)
