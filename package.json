@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon index.js",
     "start": "node index.js",
-    "test": "eslint . && mocha ./test/*"
+    "test": "eslint . && NODE_ENV=test mocha ./test/*"
   },
   "author": "Jack Cuthbert <jckcthbrt@gmail.com>",
   "license": "MIT",
