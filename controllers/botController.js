@@ -15,6 +15,8 @@ exports.index = (req, res) => {
       response_type: 'ephemeral',
       text: 'Searching...',
     });
+  } else {
+    res.sendStatus(200);
   }
 
   // Send the message!
