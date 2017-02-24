@@ -1,5 +1,5 @@
 const axios = require('axios');
-const querystring = require('querystring');
+const qs = require('qs');
 
 const Team = require('./Team');
 const Kaomoji = require('./Kaomoji');
@@ -24,10 +24,10 @@ exports.buildString = (text, userName) => {
 
   // If we only have one word, don't add on the user's text
   if (parts.length === 1) {
-    return `>>> ${kaomoji}\n\n_— <@${userName}>_`;
+    return `${kaomoji}\n\n_— <@${userName}>_`;
   }
 
-  return `>>> ${message}  ${kaomoji}\n\n_— <@${userName}>_`;
+  return `${message}  ${kaomoji}\n\n_— <@${userName}>_`;
 };
 
 /* eslint arrow-body-style: 0*/
@@ -50,25 +50,62 @@ exports.send = (client, teamId, channelId, userName, text, responseUrl) => {
         });
       }
 
-      // Send a message as the bot user
-      return axios.post('https://slack.com/api/chat.postMessage', querystring.stringify({
-        token: team.bot_access_token,
+      return axios.post('https://slack.com/api/chat.postMessage', qs.stringify({
+        token: team.access_token,
         channel: channelId,
-        as_user: true,
+        as_user: false,
         text: message,
       }))
       .then((res) => {
-        // If it failed, it's likely that the bot is not_in_channel. Send
-        // prompt output fot that
-        if (!res.data.ok && res.data.error === 'not_in_channel') {
+        if (!res.data.ok) {
+          console.error(res.data.error);
           return axios.post(responseUrl, {
             token: team.access_token,
             response_type: 'ephemeral',
-            text: 'Invite your Kaomoji bot to this channel! 「(°ヘ°)',
+            text: 'Uh oh! Something broke! 「(°ヘ°)',
           });
         }
 
-        return res;
+        // Send a message as the bot user
+        const attachments = [
+          {
+            title: 'Did I get that kaomoji correct?',
+            color: '#ff80ab',
+            attachment_type: 'default',
+            // Bit of a hack, see botController.interactiveButton() for why I'm
+            // doing this
+            callback_id: `kaomoji_corrections/${res.data.message.ts}`,
+            actions: [
+              {
+                name: 'yes',
+                type: 'button',
+                text: 'Yep',
+                style: 'primary',
+                value: 'correct',
+              },
+              {
+                name: 'no',
+                type: 'button',
+                text: 'Nope',
+                style: 'danger',
+                value: 'incorrect',
+              },
+            ],
+          },
+        ];
+
+        console.log('Sending confirm', res.data);
+
+        // Return some buttons to help us understand if the kaomoji wasn't
+        // quite right
+        return axios.post(responseUrl, {
+          token: team.access_token,
+          response_type: 'ephemeral',
+          attachments,
+        })
+        .catch((err) => {
+          console.error(err);
+        });
       })
       .catch((err) => {
         console.err(err);

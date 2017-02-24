@@ -1,6 +1,6 @@
 const Message = require('../services/Message');
 
-exports.index = (req, res) => {
+exports.slashCommand = (req, res) => {
   if (req.body.token !== process.env.SLACK_VERIFICATION_TOKEN) {
     res.send('Please add the Kaomoji App to your team');
     return;
@@ -29,3 +29,28 @@ exports.index = (req, res) => {
       });
     });
 };
+
+exports.interactiveButton = (req, res) => {
+  // For some reason we need to parse JSON here because slack
+  // doesn't do it for us
+  // https://api.slack.com/docs/message-buttons
+  const payload = JSON.parse(req.body.payload);
+
+  if (payload.token !== process.env.SLACK_VERIFICATION_TOKEN) {
+    res.send('Please add the Kaomoji App to your team');
+    return;
+  }
+
+  const { callback_id, actions, team, user, response_url } = payload;
+  console.log('Action clicked:', actions);
+
+  // Bit of a hack, but using this we can get the timestamp of the correct or incorrect kaomoji
+  const originalMessageTimestamp = callback_id.split('/')[1];
+  console.log('Message timestamp:', originalMessageTimestamp);
+
+
+  res.send({
+    response_type: 'ephemeral',
+    text: `You clicked ${actions[0].name}. Thanks ${user.name}!`,
+  });
+}

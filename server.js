@@ -32,7 +32,8 @@ const botController = require('./controllers/botController');
 const authController = require('./controllers/authController');
 
 // Slack Routes
-app.post('/app', botController.index);
+app.post('/bot/command', botController.slashCommand);
+app.post('/bot/button', botController.interactiveButton);
 app.get('/connect', authController.callback);
 app.get('/addtoslack', authController.redirect);
 
