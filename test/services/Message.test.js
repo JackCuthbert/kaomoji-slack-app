@@ -15,8 +15,8 @@ describe('Message', () => {
     });
 
     it('returns the correct string', () => {
-      expect(Message.buildString('happy', 'some_user')).to.equal('>>> _へ__(‾◡◝ )>\n\n_— <@some_user>_');
-      expect(Message.buildString('happy with a sentence', 'some_user')).to.equal('>>> with a sentence  _へ__(‾◡◝ )>\n\n_— <@some_user>_');
+      expect(Message.buildString('happy', 'some_user')).to.equal('_へ__(‾◡◝ )>\n\n_— <@some_user>_');
+      expect(Message.buildString('happy with a sentence', 'some_user')).to.equal('with a sentence  _へ__(‾◡◝ )>\n\n_— <@some_user>_');
     });
 
     it('returns undefined when no file matched', () => {

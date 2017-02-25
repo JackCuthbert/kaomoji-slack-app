@@ -69,32 +69,39 @@ exports.send = (client, teamId, channelId, userName, text, responseUrl) => {
         // Send a message as the bot user
         const attachments = [
           {
-            title: 'Did I get that kaomoji correct?',
+            title: 'How did I do?',
             color: '#ff80ab',
             attachment_type: 'default',
-            // Bit of a hack, see botController.interactiveButton() for why I'm
-            // doing this
-            callback_id: `kaomoji_corrections/${res.data.message.ts}`,
+            // Here we're storing the sent kaomoji and associated keyword
+            // in a base64 string to be sent back and decoded in the interactive
+            // buttons controller
+            callback_id: new Buffer(JSON.stringify({
+              kaomoji: message.substring(0, message.indexOf('\n')),
+              keyword: text.split(' ')[0],
+            })).toString('base64'),
             actions: [
               {
-                name: 'yes',
+                name: 'correct',
                 type: 'button',
-                text: 'Yep',
+                text: 'Perfect!',
                 style: 'primary',
                 value: 'correct',
               },
               {
-                name: 'no',
+                name: 'incorrect',
                 type: 'button',
-                text: 'Nope',
-                style: 'danger',
-                value: 'incorrect',
+                text: 'Wrong kaomoji',
+                value: 'incorrect_kaomoji',
+              },
+              {
+                name: 'unsupported',
+                type: 'button',
+                text: 'Empty rectangles',
+                value: 'unsupported_characters',
               },
             ],
           },
         ];
-
-        console.log('Sending confirm', res.data);
 
         // Return some buttons to help us understand if the kaomoji wasn't
         // quite right
@@ -108,7 +115,7 @@ exports.send = (client, teamId, channelId, userName, text, responseUrl) => {
         });
       })
       .catch((err) => {
-        console.err(err);
+        console.error(err);
       });
     });
 };

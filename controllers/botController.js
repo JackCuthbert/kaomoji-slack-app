@@ -1,4 +1,5 @@
 const Message = require('../services/Message');
+const Kaomoji = require('../services/Kaomoji');
 
 exports.slashCommand = (req, res) => {
   if (req.body.token !== process.env.SLACK_VERIFICATION_TOKEN) {
@@ -41,16 +42,28 @@ exports.interactiveButton = (req, res) => {
     return;
   }
 
-  const { callback_id, actions, team, user, response_url } = payload;
-  console.log('Action clicked:', actions);
+  const { callback_id, actions, team, user } = payload;
 
-  // Bit of a hack, but using this we can get the timestamp of the correct or incorrect kaomoji
-  const originalMessageTimestamp = callback_id.split('/')[1];
-  console.log('Message timestamp:', originalMessageTimestamp);
+  if (actions[0].value !== 'correct') {
+    console.log('Kaomoji feedback:', {
+      feedbackType: actions[0].value,
+      // Decode the base64 encoded string from the callback ID as JSON
+      originalText: JSON.parse(Buffer.from(callback_id, 'base64').toString('utf8')),
+      team,
+      user,
+    });
 
+    const happyKaomoji = Kaomoji.renderEmoji('excited');
+    const feedbackMessage = `Thanks, ${user.name}! I'll try and get it right next time ${happyKaomoji}`;
 
-  res.send({
-    response_type: 'ephemeral',
-    text: `You clicked ${actions[0].name}. Thanks ${user.name}!`,
-  });
-}
+    res.send({
+      response_type: 'ephemeral',
+      text: feedbackMessage,
+    });
+  } else {
+    res.send({
+      response_type: 'ephemeral',
+      text: `Thanks, ${user.name}!`,
+    });
+  }
+};

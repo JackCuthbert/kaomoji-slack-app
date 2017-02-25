@@ -33,6 +33,16 @@ exports.getKaomojiList = (keyword) => {
  */
 exports.chooseEmoji = data => data.emoji[Math.floor(Math.random() * data.emoji.length)];
 
+/*
+ * Get a kaomoji from a keyword
+ */
+exports.renderEmoji = (keyword) => {
+  const file = this.resolveInput(keyword);
+  const list = this.getKaomojiList(file);
+
+  return this.chooseEmoji(list);
+};
+
 /* eslint quote-props: 0 */
 /*
  * Master list of kaomoji associations
