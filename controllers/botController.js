@@ -9,16 +9,10 @@ exports.slashCommand = (req, res) => {
 
   const { team_id, channel_id, user_name, text, response_url } = req.body;
 
-  // Send an immediate response so that it doesn't timeout
-  // TODO: Can we update this after a successful message is sent?
-  if (process.env.NODE_ENV !== 'production') {
-    res.send({
-      response_type: 'ephemeral',
-      text: 'Searching...',
-    });
-  } else {
-    res.sendStatus(200);
-  }
+  res.send({
+    response_type: 'ephemeral',
+    text: 'Searching...',
+  });
 
   // Send the message!
   Message.send(req.dbClient, team_id, channel_id, user_name, text, response_url)
