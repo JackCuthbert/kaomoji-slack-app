@@ -1,12 +1,18 @@
 # kaomoji-bot [![Build Status](https://travis-ci.org/JackCuthbert/kaomoji-bot.svg?branch=master)](https://travis-ci.org/JackCuthbert/kaomoji-bot)
 
+[![Add to Slack](https://platform.slack-edge.com/img/add_to_slack.png)](https://kaomoji-bot-slack.herokuapp.com/addtoslack)
+
 Because why not? ┐(´∀｀)┌
+
+![kaomoji_demo](./public/kaomoji_demo.png)  
+*Example output*
 
 ---
 
-All the credit for creating and maintaining the awesome list of kaomoji this bot uses goes to [JapaneseEmoticons.me](http://japaneseemoticons.me/).
+## Usage (° o°)
 
-If you're into kaomoji please consider supporting them on Patreon, directly through PayPal, or by downloading their iOS and Android apps! w(°ｏ°)w
+`/kaomoji <feeling> [optional message]` - Send a kaomoji  
+`/kaomoji help` - See usage information
 
 ---
 
@@ -21,26 +27,11 @@ Mac and Windows have pretty good coverage out of the box, linux not-so-much. In 
 
 If you don't want to install all 470MB+ worth of Noto fonts, see the contents of the linked AUR packages for which ones to install. _(This is only tested under Arch Linux!)_
 
-## Installation ╰། ❛ ൧̑ ❛ །╯
+---
 
-Visit: [Some Link](http://localhost/).
+All the credit for creating and maintaining the awesome list of kaomoji this bot uses goes to [JapaneseEmoticons.me](http://japaneseemoticons.me/).
 
-
-
-## Usage ⚈ ̫ ⚈
-
-Commands should be consistent across Discord and Slack.
-
-`/kaomoji <feeling> [optional message]` - Send a kaomoji  
-`/kaomoji help` - See usage information
-
-## Scraping ヘ（゜◇、゜）ノ
-
-TODO
-
-## Deployment (•̀ᴗ•́)൬༉
-
-TODO
+If you're into kaomoji please consi![]()der supporting them on Patreon, directly through PayPal, or by downloading their iOS and Android apps! w(°ｏ°)w
 
 ---
 
