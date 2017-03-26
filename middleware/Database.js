@@ -23,7 +23,7 @@ exports.credentials = () => {
 
 exports.pool = () => {
   const pool = new pg.Pool(Object.assign({}, {
-    max: 20,
+    max: 10,
     idleTimeoutMillis: 30000,
   }, this.credentials()));
 
