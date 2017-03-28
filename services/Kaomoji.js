@@ -49,7 +49,7 @@ exports.renderEmoji = (keyword) => {
  * TODO: Can we deal with this another way?
  */
 exports.associationList = {
-  'happy': ['happy', 'glad', 'positive', 'yay', 'wee', 'wew'],
+  'happy': ['happy', 'glad', 'positive', 'yay', 'wee', 'wew', 'yey'],
   'sad': ['sad', 'unhappy', 'depressed', 'cry', 'crying', 'depressed', 'oh'],
   'angry': ['angry', 'annoyed', 'bitter', 'enraged', 'exasperated', 'furious', 'heated', 'impassioned', 'indignant', 'irate', 'irritable', 'irritated', 'offended', 'outraged', 'resentful', 'sullen', 'uptight'],
   'cloud': ['cloud', 'darkness', 'fog', 'gloom', 'mist', 'puff', 'smog', 'smoke', 'steam', 'vapor', 'veil'],
@@ -67,10 +67,10 @@ exports.associationList = {
   'evil': ['evil', 'bad', 'corrupt', 'destructive', 'hateful', 'heinous', 'hideous', 'malevolent', 'malicious', 'nefarious', 'unpleasant', 'vile', 'vicious', 'wicked'],
   'friend': ['friend', 'buddy', 'ally', 'associate', 'classmate', 'colleague', 'companion', 'chum', 'mate', 'pal'],
   'hungry': ['hungry', 'starving', 'ravenous', 'hunger', 'yum'],
-  'meh': ['meh', 'whatever', 'eh', 'bleh'],
+  'meh': ['meh', 'whatever', 'eh', 'bleh', 'dunno'],
   'other-action': ['other-action', 'actions', 'action'],
   'running': ['running', 'run', 'sprint', 'race', 'rush', 'jog', 'gallop'],
-  'sleeping': ['sleeping', 'sleep', 'snooze', 'slumber', 'dream', 'hibernation', 'coma', 'nap', 'catnap', 'doze', 'bedtime', 'bed'],
+  'sleeping': ['sleeping', 'sleep', 'snooze', 'slumber', 'dream', 'hibernation', 'coma', 'nap', 'catnap', 'doze', 'bedtime', 'bed', 'sleepy', 'tired', 'exhausted'],
   'thinking': ['thinking', 'think', 'ponder', 'pondering', 'deliberate', 'deliberating', 'meditate'],
   'writing': ['writing', 'write', 'compose', 'draft', 'note', 'record', 'letter', 'scrawl', 'inscribe'],
   'bear': ['bear'],
