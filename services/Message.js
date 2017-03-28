@@ -46,7 +46,7 @@ exports.send = (client, teamId, channelId, userName, text, responseUrl) => {
         return axios.post(responseUrl, {
           token: team.access_token,
           response_type: 'ephemeral',
-          text: 'I don\'t know what that is! .·´¯`(>▂<)´¯`·.',
+          text: `I don't know what that is! ${Kaomoji.renderEmoji('crying')}`,
         });
       }
 
