@@ -4,14 +4,14 @@
 
 Because why not? ┐(´∀｀)┌
 
-![kaomoji_demo](./public/kaomoji_demo.png)  
+![kaomoji_demo](./public/kaomoji_demo.png)
 *Example output*
 
 ---
 
 ## Usage (° o°)
 
-`/kaomoji <feeling> [optional message]` - Send a kaomoji  
+`/kaomoji <searchTerm> [optional message]` - Send a kaomoji
 `/kaomoji help` - See usage information
 
 ---

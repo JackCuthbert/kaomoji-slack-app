@@ -1,3 +1,4 @@
+const sinon = require('sinon');
 const expect = require('chai').expect;
 const Kaomoji = require('../../services/Kaomoji');
 
@@ -7,10 +8,6 @@ describe('Kaomoji', () => {
       expect(Kaomoji.getKaomojiList('happy').title).to.equal('happy');
       expect(Kaomoji.getKaomojiList('pig').emoji.length).to.equal(100);
     });
-  });
-
-  describe('#buildString', () => {
-    it('builds the correct message string');
   });
 
   describe('#chooseEmoji', () => {
@@ -36,6 +33,22 @@ describe('Kaomoji', () => {
 
     it('returns "help" when no associated text is found', () => {
       expect(Kaomoji.resolveInput('blerg')).to.equal('help');
+    });
+  });
+
+  describe('#buildMessage', () => {
+    before(() => {
+      // Need to make sure they way we're choosing emoji is reliably for tests
+      sinon.stub(Math, 'floor').returns(4); // Totally random
+    });
+
+    it('returns the correct string', () => {
+      expect(Kaomoji.buildMessage('happy', 'some_user')).to.equal('_へ__(‾◡◝ )>');
+      expect(Kaomoji.buildMessage('happy with a sentence', 'some_user')).to.equal('with a sentence  _へ__(‾◡◝ )>');
+    });
+
+    it('returns undefined when no file matched', () => {
+      expect(Kaomoji.buildMessage('somestringwecantfind', 'some_user')).to.equal(undefined);
     });
   });
 });

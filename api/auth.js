@@ -1,7 +1,8 @@
 const axios = require('axios');
 const querystring = require('querystring');
 const crypto = require('crypto');
-const Team = require('../services/Team');
+
+const { Team } = require('../config/models');
 
 exports.callback = (req, res) => {
   const { code, state } = req.query;
@@ -21,17 +22,24 @@ exports.callback = (req, res) => {
     code: code || '',
   }))
   .then((response) => {
-    const { ok, team_id, access_token, bot } = response.data;
-    const { bot_access_token, bot_user_id } = bot;
+    const { ok, team_id, access_token } = response.data;
 
     if (ok) {
-      Team.create(req.dbClient, team_id, access_token, bot_user_id, bot_access_token)
+      // TODO: bookshelf/knex doesn't support upserts
+      Team.where({ team_id })
+        .fetchAll()
+        .then((collection) => {
+          if (collection.length === 1) {
+            return collection.at(0).set({ access_token }).save();
+          }
+
+          return new Team({ team_id, access_token }).save();
+        })
         .then(() => {
-          res.status(200);
-          res.redirect('/connected');
+          res.redirect('/auth/connected');
         })
         .catch((err) => {
-          console.error(err);
+          res.status(500);
           res.send(err);
         });
     }
@@ -42,14 +50,14 @@ exports.callback = (req, res) => {
   });
 };
 
-exports.redirect = (req, res) => {
+exports.addtoslack = (req, res) => {
   // Create a hash with the unique id and the state key to send to slack and
   // store in a session
   const hash = crypto.createHmac('sha256', process.env.KAOMOJI_STATE_KEY)
     .update(new Buffer(req.id, 'utf-8'))
     .digest('hex');
 
-  const url = `https://slack.com/oauth/authorize?scope=commands,bot,chat:write:bot&client_id=${process.env.SLACK_CLIENT_ID}&state=${hash}`;
+  const url = `https://slack.com/oauth/authorize?scope=commands,chat:write:bot&client_id=${process.env.SLACK_CLIENT_ID}&state=${hash}`;
 
   /* eslint no-param-reassign: 0 */
   req.kaomojiConnect.state = hash;

@@ -43,6 +43,29 @@ exports.renderEmoji = (keyword) => {
   return this.chooseEmoji(list);
 };
 
+/*
+ * Builds the string that will be sent by the slack bot.
+ * NOTE: text will always be a string
+ */
+exports.buildMessage = (text) => {
+  const parts = text.split(' ');
+  const keyword = this.resolveInput(parts[0]);
+  const kaomojiList = this.getKaomojiList(keyword);
+
+  // Return undefined if there's no list.
+  if (!kaomojiList) return undefined;
+
+  const kaomoji = this.chooseEmoji(kaomojiList);
+  const message = text
+    .split(' ')
+    .splice(1, parts.length)
+    .join(' ');
+
+  // If we only have one word, don't add on the user's text
+  if (parts.length === 1) return kaomoji;
+  return `${message}  ${kaomoji}`;
+};
+
 /* eslint quote-props: 0 */
 /*
  * Master list of kaomoji associations
