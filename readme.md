@@ -1,10 +1,10 @@
 # kaomoji-bot [![Build Status](https://travis-ci.org/JackCuthbert/kaomoji-bot.svg?branch=master)](https://travis-ci.org/JackCuthbert/kaomoji-bot)
 
-[![Add to Slack](https://platform.slack-edge.com/img/add_to_slack.png)](https://kaomoji-bot-slack.herokuapp.com/addtoslack)
+[![Add to Slack](https://platform.slack-edge.com/img/add_to_slack.png)](https://thermio.d1.jckcthbrt.io/addtoslack)
 
 Because why not? ┐(´∀｀)┌
 
-![kaomoji_demo](./public/kaomoji_demo.png)
+![kaomoji_demo](./public/kaomoji_demo.png)  
 *Example output*
 
 ---
