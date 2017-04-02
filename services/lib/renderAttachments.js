@@ -1,11 +1,10 @@
 module.exports = (message, text, timestamp, channel) => {
   // Compute the kaomoji sent from the message that was built
   // NOTE: Never reveal the user message, respect dat privacy yo
-  const sentMessage = message.substring(0, message.indexOf('\n'));
-  const kaomoji = sentMessage.split(' ')[sentMessage.split(' ').length - 1];
+  const kaomoji = message.split('  ')[message.split('  ').length - 1];
   return [
     {
-      color: '#ff80ab',
+      color: '#ffa0c0',
       text: 'How did I do?',
       attachment_type: 'default',
       // Here we're storing the sent kaomoji and associated keyword
@@ -13,7 +12,7 @@ module.exports = (message, text, timestamp, channel) => {
       // buttons controller
       callback_id: new Buffer(JSON.stringify({
         kaomoji,
-        keyword: text.split(' ')[0],
+        searchTerm: text,
       })).toString('base64'),
       actions: [
         {
@@ -42,7 +41,7 @@ module.exports = (message, text, timestamp, channel) => {
           style: 'danger',
           value: `${timestamp}:${channel}`,
           confirm: {
-            title: 'Mark as NSWF',
+            title: 'Mark as NSFW',
             text: 'Mark this kaomoji as inappropriate and delete it from the channel?',
             ok_text: 'Yes',
             dismiss_text: 'No',

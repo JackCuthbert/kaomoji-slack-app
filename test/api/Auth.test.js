@@ -23,7 +23,6 @@ describe('Auth', () => {
         return new Team({ team_id: 'test_team_id', access_token: 'test_team_access_token' }).save();
       })
       .then(() => {
-        console.log('table seeded');
         done();
       })
       .catch(console.log);
@@ -92,8 +91,6 @@ describe('Auth', () => {
               expect(collection.length).to.equal(1);
 
               const team = collection.at(0);
-              console.log(team.attributes);
-
               expect(team.attributes.team_id).to.equal('test_team_id');
               expect(team.attributes.access_token).to.equal('new_access_token');
 

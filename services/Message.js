@@ -5,7 +5,6 @@ const renderAttachments = require('./lib/renderAttachments');
 const { Team, Stat } = require('../config/models');
 const Kaomoji = require('./Kaomoji');
 
-/* eslint arrow-body-style: 0*/
 /*
  * construct and sent a kaomoji message to the slack api
  */
@@ -37,7 +36,7 @@ exports.send = (team, channel, username, text, url) => {
           as_user: false,
           attachments: JSON.stringify([
             {
-              color: '#ff80ab',
+              color: '#ffa0c0',
               text: renderedMessage,
               footer: `Posted using /kaomoji by @${username}`,
             },
@@ -45,7 +44,7 @@ exports.send = (team, channel, username, text, url) => {
         }));
     })
     .then((res) => {
-      if (!res.data.ok) {
+      if (res.data !== 'ok' && !res.data.ok) {
         console.error(res.data.error);
         return axios
           .post(url, {
@@ -54,6 +53,8 @@ exports.send = (team, channel, username, text, url) => {
             text: 'Uh oh! Something broke! 「(°ヘ°)',
           });
       }
+
+      if (!renderedMessage) return res;
 
       return axios
         .post(url, {

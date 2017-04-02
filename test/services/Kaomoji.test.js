@@ -1,4 +1,3 @@
-const sinon = require('sinon');
 const expect = require('chai').expect;
 const Kaomoji = require('../../services/Kaomoji');
 
@@ -23,32 +22,28 @@ describe('Kaomoji', () => {
 
   describe('#resolveInput', () => {
     it('returns "happy" when associated text passed in', () => {
-      expect(Kaomoji.resolveInput('glad')).to.equal('happy');
+      expect(Kaomoji.resolveInput('glad')[0].item).to.equal('happy');
     });
 
     it('doesn\'t care about capitalization', () => {
-      expect(Kaomoji.resolveInput('Glad')).to.equal('happy');
-      expect(Kaomoji.resolveInput('UNHAPPY')).to.equal('sad');
+      expect(Kaomoji.resolveInput('Glad')[0].item).to.equal('happy');
+      expect(Kaomoji.resolveInput('UNHAPPY')[0].item).to.equal('sad');
     });
 
-    it('returns "help" when no associated text is found', () => {
-      expect(Kaomoji.resolveInput('blerg')).to.equal('help');
+    it('returns empty array when no matched text', () => {
+      expect(Kaomoji.resolveInput('blerg').length).to.equal(0);
     });
   });
 
   describe('#buildMessage', () => {
-    before(() => {
-      // Need to make sure they way we're choosing emoji is reliably for tests
-      sinon.stub(Math, 'floor').returns(4); // Totally random
-    });
-
-    it('returns the correct string', () => {
-      expect(Kaomoji.buildMessage('happy', 'some_user')).to.equal('_へ__(‾◡◝ )>');
-      expect(Kaomoji.buildMessage('happy with a sentence', 'some_user')).to.equal('with a sentence  _へ__(‾◡◝ )>');
+    it('returns a string from a matched input', () => {
+      expect(Kaomoji.buildMessage('happy')).to.be.a('string');
+      expect(Kaomoji.buildMessage('happy with a sentence')).to.be.a('string');
+      expect(Kaomoji.buildMessage('happy with a sentence')).to.include('with a sentence');
     });
 
     it('returns undefined when no file matched', () => {
-      expect(Kaomoji.buildMessage('somestringwecantfind', 'some_user')).to.equal(undefined);
+      expect(Kaomoji.buildMessage('somestringwecantfind')).to.equal(undefined);
     });
   });
 });

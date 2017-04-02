@@ -4,6 +4,7 @@ const Kaomoji = require('../services/Kaomoji');
 const axios = require('axios');
 const qs = require('qs');
 const { Team } = require('../config/models');
+const staticMessages = require('../services/lib/staticMessages');
 
 exports.command = (req, res) => {
   if (req.body.token !== process.env.SLACK_VERIFICATION_TOKEN) {
@@ -13,15 +14,22 @@ exports.command = (req, res) => {
 
   const { team_id, channel_id, user_name, text, response_url } = req.body;
 
-  // Return some buttons to help us understand if the kaomoji wasn't
-  // quite right
-  res.send({
-    response_type: 'ephemeral',
-    text: 'Searching...',
-  });
+  if (text === '') {
+    res.send(staticMessages.blank());
+  } else if (text === 'help') {
+    axios.get('https://api.github.com/repos/JackCuthbert/kaomoji-bot/commits')
+      .then((response) => {
+        const { data } = response;
+        const sha = data[0].sha.substring(0, 6);
+        const message = data[0].commit.message;
 
-  // Send the message!
-  Message.send(team_id, channel_id, user_name, text, response_url);
+        res.send(staticMessages.help(sha, message));
+      });
+  } else {
+    // Send the message!
+    res.send(staticMessages.searching());
+    Message.send(team_id, channel_id, user_name, text, response_url);
+  }
 };
 
 exports.button = (req, res) => {
@@ -54,6 +62,12 @@ exports.button = (req, res) => {
             ts: messageInfo[0],
             channel: messageInfo[1],
           }))
+          .then(() => {
+            res.send({
+              response_type: 'ephemeral',
+              text: `Thanks, ${user.name}! I'll mark this as inappropriate. ${Kaomoji.renderEmoji('salute')}`,
+            });
+          })
           .catch((err) => {
             console.log(err);
           })
