@@ -563,6 +563,11 @@ module.exports = [
       'hey',
       'welcome',
       'ciao',
+      'morning',
+      'evening',
+      'afternoon',
+      'heya',
+      'arvo',
     ],
   },
   {
