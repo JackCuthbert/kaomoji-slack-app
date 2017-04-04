@@ -41,7 +41,44 @@ module.exports = {
   }),
   blank: () => ({
     response_type: 'ephemeral',
-    text: 'Use "/kaomoji help" for help with this command.',
+    text: 'Use /kaomoji help for help with this command.',
   }),
+  serverErrorAttachments: (text, errorCode, username, channelId, teamId, timestamp) => ([
+    {
+      fallback: 'Your found an error!',
+      color: '#ff0000',
+      title: 'You Found An Error!',
+      title_link: 'https://github.com/JackCuthbert/kaomoji-bot/issues',
+      text: 'Help me fix that by creating an issue on GitHub with as much information as you can provide.',
+      fields: [
+        {
+          title: 'Text',
+          value: text,
+          short: false,
+        },
+        {
+          title: 'Error Code',
+          value: errorCode,
+          short: true,
+        },
+        {
+          title: 'Username',
+          value: username,
+          short: true,
+        },
+        {
+          title: 'Channel ID',
+          value: channelId,
+          short: true,
+        },
+        {
+          title: 'Team ID',
+          value: teamId,
+          short: true,
+        },
+      ],
+      ts: timestamp,
+    },
+  ]),
 };
 

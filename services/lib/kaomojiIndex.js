@@ -764,6 +764,8 @@ module.exports = [
       'nose',
       'bleed',
       'nosebleed',
+      'hnng',
+      'hnnng',
     ],
   },
   {

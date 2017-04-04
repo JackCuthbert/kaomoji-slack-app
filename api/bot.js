@@ -76,11 +76,13 @@ exports.button = (req, res) => {
     res.send({ response_type: 'ephemeral', text: `Thanks, ${user.name}!` });
   }
 
-  console.log('Kaomoji feedback:');
-  console.log({
-    feedbackType: actions[0].name,
-    // Decode the base64 encoded string from the callback ID as JSON
-    originalText: JSON.parse(Buffer.from(callback_id, 'base64').toString('utf8')),
-    team,
-  });
+  if (actions[0].name !== 'correct') {
+    console.log('Kaomoji feedback:');
+    console.log({
+      feedbackType: actions[0].name,
+      // Decode the base64 encoded string from the callback ID as JSON
+      originalText: JSON.parse(Buffer.from(callback_id, 'base64').toString('utf8')),
+      team,
+    });
+  }
 };

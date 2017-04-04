@@ -1,6 +1,7 @@
 const axios = require('axios');
 const qs = require('qs');
 
+const staticMessages = require('./lib/staticMessages');
 const renderAttachments = require('./lib/renderAttachments');
 const { Team, Stat } = require('../config/models');
 const Kaomoji = require('./Kaomoji');
@@ -45,12 +46,14 @@ exports.send = (team, channel, username, text, url) => {
     })
     .then((res) => {
       if (res.data !== 'ok' && !res.data.ok) {
-        console.error(res.data.error);
+        const { error, ts } = res.data;
+        console.log({ error, text, username, channel, team });
         return axios
           .post(url, {
             token: accessToken,
             response_type: 'ephemeral',
             text: 'Uh oh! Something broke! 「(°ヘ°)',
+            attachments: staticMessages.serverErrorAttachments(text, error, username, channel, team, ts),
           });
       }
 
