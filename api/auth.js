@@ -40,7 +40,8 @@ exports.callback = (req, res) => {
         })
         .catch((err) => {
           res.status(500);
-          res.send(err);
+          console.log(err);
+          res.send(`Team creation failed. Error code ${err.code}`);
         });
     }
   })
