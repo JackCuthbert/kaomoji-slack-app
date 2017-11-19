@@ -1,6 +1,8 @@
 # kaomoji-bot [![Build Status](https://travis-ci.org/JackCuthbert/kaomoji-slack-app.svg?branch=master)](https://travis-ci.org/JackCuthbert/kaomoji-slack-app)
 
-[![Add to Slack](https://platform.slack-edge.com/img/add_to_slack.png)](https://kaomoji.d1.jckcthbrt.io/addtoslack)
+### Important: The main server for the kaomoji slack app is currently offline as I'm planning to rebuild Kaomoji using AWS Lambda so it doesn't cost me as much (or anything) to run.
+
+<!-- [![Add to Slack](https://platform.slack-edge.com/img/add_to_slack.png)](https://kaomoji.d1.jckcthbrt.io/addtoslack) -->
 
 Because why not? ┐(´∀｀)┌
 
